@@ -1,0 +1,48 @@
+#control-panel {
+    background-color: #fff;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#format-actions {
+    display: flex;
+}
+
+.format-action__button {
+    font-style: italic;
+    background-color: #ffffff;
+    width: 40px;
+    height: 20px;
+    border: none;
+    border-radius: 5px;
+    margin: 0 5px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+}
+
+.format-action__button:focus {
+    outline:0;
+}
+
+.format-action__button--black {
+    background-color: black;
+}
+
+.format-action__button--red {
+    background-color: red;
+}
+
+.format-action__button--grey {
+    background-color: grey;
+}
+
+.format-action__button--active {
+    border: 1.5px solid #ffa500;
+}
+
+
+
