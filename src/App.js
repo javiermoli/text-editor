@@ -10,46 +10,60 @@ class App extends Component {
 
     this.state = {
       isModalOpen: false,
-      text:"",
+      text: "",
     };
   }
 
   getText = async () => {
-    const text = await getMockText()
+    const text = await getMockText();
     this.setState({
-      text
-    })    
-  }
+      text,
+    });
+  };
 
-  componentDidMount = () => this.getText()
-  
+  componentDidMount = () => this.getText();
 
-  onClick = () => {
-    if(window.getSelection().toString() !== "") {
+  textSelection = () => {
+    if (window.getSelection().toString() !== "") {
       this.setState({
         isModalOpen: true,
       });
     }
- 
   };
 
-  onClick2 = e => {    
-    if (!e.target.className.includes("format-action__button" || "format-action__button-text")) {
+  hiddenModal = e => {
+    if (!e.target.className.includes("format-action")) {
       this.setState({
         isModalOpen: false,
       });
     }
   };
 
+  updateTextDocument = selectedSyn => {
+    const range = window.getSelection().getRangeAt(0);
+
+    const startSelectedWord = range.startOffset;
+    const endSelectedWord = range.endOffset;
+    var textFirstPart = this.state.text.substr(0, startSelectedWord);
+    var textSecondPart = this.state.text.substr(endSelectedWord);
+
+    this.setState({
+      text: textFirstPart + selectedSyn + textSecondPart,
+      isModalOpen: false,
+    });
+  };
+
   render() {
     return (
-      <div onClick={this.onClick2} className="App">
+      <div onClick={this.hiddenModal} className="App">
         <header>
           <span>Simple Text Editor</span>
         </header>
         <main>
-          {this.state.isModalOpen && <ControlPanel  />}
-          <FileZone text={this.state.text} onClick={this.onClick} />
+          {this.state.isModalOpen && (
+            <ControlPanel updateTextDocument={this.updateTextDocument} />
+          )}
+          <FileZone text={this.state.text} onClick={this.textSelection} />
         </main>
       </div>
     );
